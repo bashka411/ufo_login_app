@@ -28,7 +28,9 @@ class Authentication {
       final token = output['access_token'];
       applicationBloc.add(ApplicationSuccesfulLoginEvent(token));
     } else {
-      throw 'Login failed with status code: ${response.statusCode}\nResponse: ${response.body}';
+      final output = json.decode(response.body) as Map<String, dynamic>;
+      final error = output['error'];
+      throw error;
     }
   }
 }
