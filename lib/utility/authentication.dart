@@ -22,13 +22,13 @@ class Authentication {
       body: json.encode(requestData),
     );
 
+    final output = json.decode(response.body) as Map<String, dynamic>;
+    
     if (response.statusCode == 200) {
       print('Login successful. Response: ${response.body}');
-      final output = json.decode(response.body) as Map<String, dynamic>;
       final token = output['access_token'];
       applicationBloc.add(ApplicationSuccesfulLoginEvent(token));
     } else {
-      final output = json.decode(response.body) as Map<String, dynamic>;
       final error = output['error'];
       throw error;
     }
